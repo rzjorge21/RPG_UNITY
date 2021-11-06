@@ -26,8 +26,20 @@ public class PlayerController : MonoBehaviour
         menuManager.OnMenuOpenEvent += MenuManager_OnMenuOpenEvent;
         // Nos vamos a inscribir como observadores de MenuManager (OnMenuCloseEvent)
         menuManager.OnMenuCloseEvent += MenuManager_OnMenuCloseEvent;
+    }
 
-        nameTag.SetText("Peter C.");
+    private void Start()
+    {
+        
+        if (PlayerPrefs.GetString("NAME_TAG") != "")
+        {
+            nameTag.SetText(PlayerPrefs.GetString("NAME_TAG"));
+            nameTagInput.text = PlayerPrefs.GetString("NAME_TAG");
+        }
+        else
+        {
+            nameTag.SetText("Peter C.");
+        }
     }
 
     private void MenuManager_OnMenuCloseEvent(object sender, System.EventArgs e)
@@ -95,6 +107,8 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateNameTag()
     {
-        nameTag.SetText(nameTagInput.text);
+        PlayerPrefs.SetString("NAME_TAG", nameTagInput.text);
+        nameTagInput.text = PlayerPrefs.GetString("NAME_TAG");
+        nameTag.SetText(PlayerPrefs.GetString("NAME_TAG"));
     }
 }
